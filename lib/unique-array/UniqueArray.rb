@@ -1,6 +1,6 @@
 
 class ::UniqueArray < ::Array::Unique
   
-  include ::HookedArray::Interface
+  include ::UniqueArray::Interface
     
 end

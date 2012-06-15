@@ -17,6 +17,8 @@ files = [
 second_basepath = 'unique-array/UniqueArray'
 
 second_files = [
+
+  'Interface'
   
 ]
 
