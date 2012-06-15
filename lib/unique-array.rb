@@ -1,6 +1,5 @@
 
-#require 'hooked-array'
-require_relative '../../hooked-array/lib/hooked-array.rb'
+require 'hooked-array'
 
 class ::Array::Unique < ::Array::Hooked
 end

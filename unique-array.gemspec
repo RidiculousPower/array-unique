@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
 
   spec.name                      =  'unique-array'
   spec.rubyforge_project         =  'unique-array'
-  spec.version                   =  '1.0.0'
+  spec.version                   =  '1.0.1'
 
   spec.summary                   =  "Provides Array::Unique and UniqueArray."
   spec.description               =  "A subclass of Array::Hooked that also keeps array unique."
