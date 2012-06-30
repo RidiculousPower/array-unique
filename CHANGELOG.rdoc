@@ -2,8 +2,12 @@
 == 6/14/2012
 
 Initial release - split from compositing-unique-array.
-Fixed require path for hooked-array to gem.
+Fixed require path for hooked_array to gem.
  
 == 6/15/2012
 
 Fixed UniqueArray::Interface to include Array::Unique::Interface.
+
+== 6/30/2012
+
+Renamed from unique-array to array-unique. File schema updated to reflect gem name.

@@ -1,6 +1,8 @@
 
 module ::Array::Unique::Interface
 
+  include ::Array::Hooked::ArrayInterface
+
   instances_identify_as!( ::Array::Unique )
 
   ################

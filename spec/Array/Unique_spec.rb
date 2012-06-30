@@ -1,5 +1,5 @@
 
-require_relative '../../lib/unique-array.rb'
+require_relative '../../lib/array-unique.rb'
 
 describe ::Array::Unique do
 

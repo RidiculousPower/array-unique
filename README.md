@@ -1,6 +1,6 @@
 # Unique Array #
 
-http://rubygems.org/gems/unique-array
+http://rubygems.org/gems/array-unique
 
 # Description #
 
@@ -12,11 +12,11 @@ A subclass of Array::Hooked that also keeps array unique.
 
 # Install #
 
-* sudo gem install unique-array
+* sudo gem install array-unique
 
 # Usage #
 
-Just like Array or Array::Hooked (provided by hooked-array)! Automatically keeps array unique.
+Just like Array or Array::Hooked (provided by hooked_array)! Automatically keeps array unique.
 
 # License #
 

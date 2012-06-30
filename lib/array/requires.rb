@@ -1,24 +1,17 @@
 
-require 'hooked-array'
-
-class ::Array::Unique < ::Array::Hooked
-end
-class ::UniqueArray < ::Array::Unique
-end
-
-basepath = 'unique-array/Array/Unique'
+basepath = 'unique'
 
 files = [
   
-  'Interface'
+  'array_interface'
   
 ]
 
-second_basepath = 'unique-array/UniqueArray'
+second_basepath = '../unique_array'
 
 second_files = [
 
-  'Interface'
+  'array_interface'
   
 ]
 
