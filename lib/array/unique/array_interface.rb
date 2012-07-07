@@ -1,5 +1,5 @@
 
-module ::Array::Unique::Interface
+module ::Array::Unique::ArrayInterface
 
   include ::Array::Hooked::ArrayInterface
 
@@ -9,7 +9,7 @@ module ::Array::Unique::Interface
   #  initialize  #
   ################
   
-  def initialize( *args )
+  def initialize( configuration_instance = nil, *args )
 
     @unique_keys = { }
     
@@ -32,10 +32,16 @@ module ::Array::Unique::Interface
 
     # make sure that set is unique
     unless @unique_keys.has_key?( object )
+      
+      if index > count
+        index = count
+        unless object.nil? or @unique_keys.has_key?( nil )
+          index += 1
+        end
+      end
+      return_value = super
 
       @unique_keys[ object ] = true
-
-      return_value = super
 
     end
     
@@ -43,53 +49,31 @@ module ::Array::Unique::Interface
     
   end
   
-  ############
-  #  insert  #
-  ############
+  ################################################
+  #  perform_single_object_insert_between_hooks  #
+  ################################################
   
-  def insert( index, *objects )
+  def perform_single_object_insert_between_hooks( index, object )
 
-    # we only insert if we don't already have the object being inserted
-    # for this reason we return nil if no insert occurred
-
-    # if we have less elements in self than the index we are inserting at
-    # we need to make sure the nils inserted cascade
-    if index > count
-      if @unique_keys.has_key?( nil )
-        index -= ( index - count + 1 )
-      else
-        objects.unshift( nil )
-        index -= ( index - count )
-      end
+    if @unique_keys.has_key?( object )
+      index = nil
+    else
+      @unique_keys[ object ] = true
+      index = super
     end
     
-    # get rid of objects already inserted
-    indexes_to_delete = [ ]
-    objects.each_with_index do |this_object, index|
-      if @unique_keys.has_key?( this_object )
-        indexes_to_delete.push( index )
-      else
-        @unique_keys[ this_object ] = true
-      end
-    end
-    indexes_to_delete.sort.reverse.each do |this_index|
-      objects.delete_at( this_index )
-    end
-
-    return nil if objects.empty?
-
-    return super
+    return index
     
   end
-
-  ##################################
-  #  perform_delete_between_hooks  #
-  ##################################
   
-  def perform_delete_between_hooks( index )
-    
+  #####################################
+  #  perform_delete_at_between_hooks  #
+  #####################################
+  
+  def perform_delete_at_between_hooks( index )
+
     @unique_keys.delete( self[ index ] )
-    
+
     return super
     
   end

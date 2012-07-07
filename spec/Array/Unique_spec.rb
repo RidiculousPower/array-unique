@@ -543,7 +543,7 @@ describe ::Array::Unique do
 
   it 'has a hook that is called before setting a value; return value is used in place of object' do
     
-    class ::Array::Unique::SubMockPreSet < ::Array::Hooked
+    class ::Array::Unique::SubMockPreSet < ::Array::Unique
       
       def pre_set_hook( index, object, is_insert = false )
         return :some_other_value
@@ -565,7 +565,7 @@ describe ::Array::Unique do
 
   it 'has a hook that is called after setting a value' do
 
-    class ::Array::Unique::SubMockPostSet < ::Array::Hooked
+    class ::Array::Unique::SubMockPostSet < ::Array::Unique
       
       def post_set_hook( index, object, is_insert = false )
         return :some_other_value
@@ -587,7 +587,7 @@ describe ::Array::Unique do
 
   it 'has a hook that is called before getting a value; if return value is false, get does not occur' do
     
-    class ::Array::Unique::SubMockPreGet < ::Array::Hooked
+    class ::Array::Unique::SubMockPreGet < ::Array::Unique
       
       def pre_get_hook( index )
         return false
@@ -610,7 +610,7 @@ describe ::Array::Unique do
 
   it 'has a hook that is called after getting a value' do
 
-    class ::Array::Unique::SubMockPostGet < ::Array::Hooked
+    class ::Array::Unique::SubMockPostGet < ::Array::Unique
       
       def post_get_hook( index, object )
         return :some_other_value
@@ -633,7 +633,7 @@ describe ::Array::Unique do
 
   it 'has a hook that is called before deleting an index; if return value is false, delete does not occur' do
     
-    class ::Array::Unique::SubMockPreDelete < ::Array::Hooked
+    class ::Array::Unique::SubMockPreDelete < ::Array::Unique
       
       def pre_delete_hook( index )
         return false
@@ -656,7 +656,7 @@ describe ::Array::Unique do
 
   it 'has a hook that is called after deleting an index' do
     
-    class ::Array::Unique::SubMockPostDelete < ::Array::Hooked
+    class ::Array::Unique::SubMockPostDelete < ::Array::Unique
       
       def post_delete_hook( index, object )
         return :some_other_value
