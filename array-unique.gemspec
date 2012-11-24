@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
 
   spec.name                      =  'array-unique'
   spec.rubyforge_project         =  'array-unique'
-  spec.version                   =  '1.1.1'
+  spec.version                   =  '1.2.0'
 
   spec.summary                   =  "Provides Array::Unique."
   spec.description               =  "A subclass of Array::Hooked that also keeps array unique."
@@ -12,6 +12,8 @@ Gem::Specification.new do |spec|
   spec.authors                   =  [ 'Asher' ]
   spec.email                     =  'asher@ridiculouspower.com'
   spec.homepage                  =  'http://rubygems.org/gems/array-unique'
+
+  spec.required_ruby_version     = ">= 1.9.1"
 
   spec.add_dependency            'array-hooked'
 
