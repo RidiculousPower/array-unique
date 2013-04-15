@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 
 require_relative '../../lib/array-unique.rb'
 
@@ -453,7 +454,7 @@ describe ::Array::Unique do
 
     unique_array = ::Array::Unique.new
 
-    unique_array += :A
+    unique_array.push( :A )
     unique_array.should == [ :A ]
 
     unique_array.unshift( :B )
@@ -469,13 +470,13 @@ describe ::Array::Unique do
 
     unique_array = ::Array::Unique.new
 
-    unique_array += :A
+    unique_array.push( :A )
     unique_array.should == [ :A ]
 
     unique_array.pop.should == :A
     unique_array.should == [ ]
 
-    unique_array += :B
+    unique_array.push( :B )
     unique_array.should == [ :B ]
 
   end
@@ -488,13 +489,13 @@ describe ::Array::Unique do
 
     unique_array = ::Array::Unique.new
 
-    unique_array += :A
+    unique_array.push( :A )
     unique_array.should == [ :A ]
 
     unique_array.shift.should == :A
     unique_array.should == [ ]
 
-    unique_array += :B
+    unique_array.push( :B )
     unique_array.should == [ :B ]
 
   end
@@ -507,13 +508,13 @@ describe ::Array::Unique do
 
     unique_array = ::Array::Unique.new
 
-    unique_array += :A
+    unique_array.push( :A )
     unique_array.should == [ :A ]
 
     unique_array.slice!( 0, 1 ).should == [ :A ]
     unique_array.should == [ ]
 
-    unique_array += :B
+    unique_array.push( :B )
     unique_array.should == [ :B ]
 
   end
@@ -526,13 +527,13 @@ describe ::Array::Unique do
 
     unique_array = ::Array::Unique.new
 
-    unique_array += :A
+    unique_array.push( :A )
     unique_array.should == [ :A ]
 
     unique_array.clear
     unique_array.should == [ ]
 
-    unique_array += :B
+    unique_array.push( :B )
     unique_array.should == [ :B ]
 
   end
@@ -545,7 +546,7 @@ describe ::Array::Unique do
     
     class ::Array::Unique::SubMockPreSet < ::Array::Unique
       
-      def pre_set_hook( index, object, is_insert = false )
+      def pre_set_hook( index, object, is_insert, length )
         return :some_other_value
       end
       
@@ -567,7 +568,7 @@ describe ::Array::Unique do
 
     class ::Array::Unique::SubMockPostSet < ::Array::Unique
       
-      def post_set_hook( index, object, is_insert = false )
+      def post_set_hook( index, object, is_insert, length )
         return :some_other_value
       end
       
@@ -575,7 +576,7 @@ describe ::Array::Unique do
     
     unique_array = ::Array::Unique::SubMockPostSet.new
 
-    unique_array.push( :some_value ).should == [ :some_other_value ]
+    unique_array.push( :some_value )
     
     unique_array.should == [ :some_value ]
     
@@ -589,7 +590,7 @@ describe ::Array::Unique do
     
     class ::Array::Unique::SubMockPreGet < ::Array::Unique
       
-      def pre_get_hook( index )
+      def pre_get_hook( index, length )
         return false
       end
       
@@ -612,7 +613,7 @@ describe ::Array::Unique do
 
     class ::Array::Unique::SubMockPostGet < ::Array::Unique
       
-      def post_get_hook( index, object )
+      def post_get_hook( index, object, length )
         return :some_other_value
       end
       

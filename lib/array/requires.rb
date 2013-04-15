@@ -1,12 +1,10 @@
+# -*- encoding : utf-8 -*-
 
 basepath = 'unique'
 
-files = [
-  
-  'array_interface'
-  
-]
-
-files.each do |this_file|
-  require_relative( File.join( basepath, this_file ) + '.rb' )
-end
+require_relative( 'unique/by_id.rb' )
+require_relative( 'unique/by_equality.rb' )
+require_relative( 'unique/by_id_and_equality.rb' )
+require_relative( 'unique/array_interface.rb' )
+require_relative( 'unique_by_id.rb' )
+require_relative( 'unique_by_id_and_equality.rb' )

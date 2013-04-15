@@ -1,22 +1,34 @@
+# -*- encoding : utf-8 -*-
 
 module ::Array::Unique::ArrayInterface
 
   include ::Array::Hooked::ArrayInterface
+  include ::Array::Unique::ByEquality
 
   instances_identify_as!( ::Array::Unique )
-
+    
   ################
   #  initialize  #
   ################
   
   def initialize( configuration_instance = nil, *args )
 
-    @unique_keys = { }
+    initialize_unique_objects
     
     super
     
   end
 
+  ###############################
+  #  initialize_unique_objects  #
+  ###############################
+
+  def initialize_unique_objects
+
+    @unique_keys = { }
+
+  end
+    
   #####################################  Self Management  ##########################################
 
   #########
@@ -31,17 +43,21 @@ module ::Array::Unique::ArrayInterface
     return_value = nil
 
     # make sure that set is unique
-    unless @unique_keys.has_key?( object )
+    unless already_include?( object )
       
-      if index > count
-        index = count
-        unless object.nil? or @unique_keys.has_key?( nil )
+      # insert exactly one nil, or none if nil is already present
+      top_bound = size
+      if index > top_bound
+        index = top_bound
+        unless already_include?( nil )
+          add_to_unique_objects( nil )
+          undecorated_insert( top_bound, nil )
           index += 1
         end
       end
       return_value = super
 
-      @unique_keys[ object ] = true
+      add_to_unique_objects( object )
 
     end
     
@@ -49,21 +65,19 @@ module ::Array::Unique::ArrayInterface
     
   end
   
-  ################################################
-  #  perform_single_object_insert_between_hooks  #
-  ################################################
+  ###########################
+  #  filter_insert_objects  #
+  ###########################
   
-  def perform_single_object_insert_between_hooks( index, object )
+  def filter_insert_objects( index, objects )
 
-    if @unique_keys.has_key?( object )
-      index = nil
-    else
-      @unique_keys[ object ] = true
-      index = super
+    objects.delete_if do |this_object| 
+      add_to_unique_objects( this_object ) unless should_delete = already_include?( this_object )
+      should_delete
     end
-    
-    return index
-    
+
+    return objects.empty? ? nil : super
+
   end
   
   #####################################
@@ -72,7 +86,7 @@ module ::Array::Unique::ArrayInterface
   
   def perform_delete_at_between_hooks( index )
 
-    @unique_keys.delete( self[ index ] )
+    delete_from_unique_objects( self[ index ] )
 
     return super
     
@@ -83,8 +97,8 @@ module ::Array::Unique::ArrayInterface
   ##############
   
   def include?( object )
-    
-    return @unique_keys.has_key?( object )
+
+    return already_include?( object )
     
   end
   
@@ -100,7 +114,7 @@ module ::Array::Unique::ArrayInterface
     delete_indexes = [ ]
     self.each_with_index do |this_object, index|
       replacement_object = yield( this_object )
-      if @unique_keys.has_key?( replacement_object ) and replacement_object != this_object
+      if already_include?( replacement_object ) and replacement_object != this_object
         delete_indexes.push( index )
       else
         self[ index ] = replacement_object
@@ -120,11 +134,7 @@ module ::Array::Unique::ArrayInterface
   #  uniq  #
   ##########
 
-  def uniq
-  
-    return self
-  
-  end
+  alias_method :uniq, :dup
 
   ###########
   #  uniq!  #
