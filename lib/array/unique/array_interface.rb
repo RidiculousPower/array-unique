@@ -112,7 +112,7 @@ module ::Array::Unique::ArrayInterface
     return to_enum unless block_given?
     
     delete_indexes = [ ]
-    self.each_with_index do |this_object, index|
+    each_with_index do |this_object, index|
       replacement_object = yield( this_object )
       if already_include?( replacement_object ) and replacement_object != this_object
         delete_indexes.push( index )
