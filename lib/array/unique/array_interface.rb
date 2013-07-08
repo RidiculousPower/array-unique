@@ -7,17 +7,25 @@ module ::Array::Unique::ArrayInterface
 
   instances_identify_as!( ::Array::Unique )
     
-  ################
-  #  initialize  #
-  ################
-  
-  def initialize( configuration_instance = nil, *args )
+  #######################################
+  #  initialize_without_internal_array  #
+  #######################################
+
+  ###
+  # Initialize with reference to a configuration instance.
+  #
+  # @param [Object] configuration_instance 
+  # 
+  #        Object that instance will be attached to; primarily useful for reference from hooks.
+  #
+  def initialize_without_internal_array( configuration_instance = nil )
 
     initialize_unique_objects
     
     super
-    
+
   end
+
 
   ###############################
   #  initialize_unique_objects  #
